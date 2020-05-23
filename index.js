@@ -1,8 +1,11 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
+const fs = require('fs')
+
+//reading token from token.txt
+var token = fs.readFileSync("./token.txt", 'utf8');
 
 const bot = new Discord.Client();
-const token = '';
 const PREFIX = '%';
 var version = '1.0';
 var servers = {};
@@ -110,7 +113,14 @@ bot.on('message', message => {
         case 'about':
             message.channel.send("Version: ".concat(version, "\nAuthor: BurnTheWitch\nPojava: sucks\nGitHub: https://github.com/BurnTheWitch21/SpiritBot.git"));
             break;
-            
+        
+        case 'help':
+            message.channel.send("Piši na našem konju jedan! Komanda je %pomagaj");
+            break;
+        
+        case 'pomagaj':
+            message.channel.send("Sve komande počinju sa '%', a na raspolaganju imaš:\n"+commandsString);
+            break;
     }
 
 })
