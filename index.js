@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 
 const bot = new Discord.Client();
-const token = '';
+const token = 'NzA2Nzg0NjAzODc2MDk4MTE5.Xslg5A.tXJ_mCtmSzwjMnKI4RRANoAbs6g';
 const PREFIX = '%';
 var version = '1.0';
 var servers = {};
@@ -84,6 +84,13 @@ bot.on('message', message => {
         case 'piper':
         case 'malay':
         case 'hehe':
+        case 'hushashmidter':
+        case 'autilagi':
+        case 'wololo':
+        case 'hepek':
+        case 'jebogabog':
+        case 'karakter':
+        case 'vululu':
 
             if (!checkVoiceChannel(message)) return;
 
@@ -94,7 +101,9 @@ bot.on('message', message => {
             break;
         
         case 'about':
-            message.channel.send("Version: ".concat(version, "\nAuthor: BurnTheWitch\nPojava: sucks\nGit: https://github.com/BurnTheWitch21/SpiritBot.git"));
+            message.channel.send("Version: ".concat(version, "\nAuthor: BurnTheWitch\nPojava: sucks\nGitHub: https://github.com/BurnTheWitch21/SpiritBot.git"));
+            break;
+            
     }
 
 })
