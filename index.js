@@ -2,10 +2,17 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 
 const bot = new Discord.Client();
-const token = '';
+const token = 'NzA2Nzg0NjAzODc2MDk4MTE5.Xr7_ig.PqKGhWRP2OjYwZsp0JkX9eoZfUU';
 const PREFIX = '%';
 var version = '1.0';
 var servers = {};
+
+//List of commands and the generation of string to output
+var commands = ["play <url>", "kreme", "žepče", "spanish", "hehe", "gae", "piper", "ronaldinho", "malay"];
+commands.sort();
+var commandsString = "";
+commands.forEach((element,number) => commandsString += String(Number(number)+1)+". "+element+"\n");
+
 
 function playSound(connection, message, sound) {
         
@@ -95,6 +102,15 @@ bot.on('message', message => {
         
         case 'about':
             message.channel.send("Version: ".concat(version, "\nAuthor: BurnTheWitch\nPojava: sucks\nGit: https://github.com/BurnTheWitch21/SpiritBot.git"));
+            break;
+        
+        case 'help':
+            message.channel.send("Piši na našem konju jedan! Komanda je %pomagaj");
+            break;
+        
+        case 'pomagaj':
+            message.channel.send("Sve komande počinju sa '%', a na raspolaganju imaš:\n"+commandsString);
+            break;
     }
 
 })
