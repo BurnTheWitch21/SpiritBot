@@ -7,6 +7,13 @@ const PREFIX = '%';
 var version = '1.0';
 var servers = {};
 
+//List of commands and the generation of string to output
+var commands = ["play <url>", "kreme", "žepče", "spanish", "hehe", "gae", "piper", "ronaldinho", "malay"];
+commands.sort();
+var commandsString = "";
+commands.forEach((element,number) => commandsString += String(Number(number)+1)+". "+element+"\n");
+
+
 function playSound(connection, message, sound) {
         
     const dispatcher = connection.play("files\\".concat(sound, ".mp3"));
