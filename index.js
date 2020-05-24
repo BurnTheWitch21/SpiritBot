@@ -1,10 +1,18 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
-const fs = require('fs')
+const fs = require('fs');
+const ytsearch = require('youtube-search');
 
-//reading token from token.txt
-var token = fs.readFileSync("./token.txt", 'utf8');
+//reading tokens from token.txt
+var tokens = fs.readFileSync("./token.txt", 'utf8').split('\n'); 
+var token = tokens[0].trim();
+var ytkey = tokens[1];
 
+var opts = {
+  maxResults: 1,
+  key: ytkey
+};
+ 
 const bot = new Discord.Client();
 const PREFIX = '%';
 var version = '1.0';
@@ -20,6 +28,15 @@ commands.forEach((element,number) => commandsString += String(Number(number)+1)+
 function playSound(connection, message, sound) {
         
     const dispatcher = connection.play("files\\".concat(sound, ".mp3"));
+    
+    dispatcher.on("finish", function() {
+        connection.disconnect();
+    })
+}
+
+function playYoutube(connection, message, link) {
+        
+    const dispatcher = connection.play(ytdl(link, {filter: 'audioonly'}));
     
     dispatcher.on("finish", function() {
         connection.disconnect();
@@ -85,6 +102,27 @@ bot.on('message', message => {
             })
 
             break;
+        
+        case 'playyt':
+            if (!checkVoiceChannel(message)) return;
+            
+            var query = args.slice(1).join(' ');
+
+            var link = '';
+            ytsearch(query, opts, function(err, results) {
+                if(err) return console.log(err);
+               
+                link = results[0].link;
+            });
+            
+            
+            if (!message.guild.voiceConnection) message.member.voice.channel.join().then(function(connection) {
+                playYoutube(connection, message, link);
+            })
+
+            message.channel.send('Spavaš li mirno, Bulaja?!');
+            
+            break;
 
         case 'kreme':
         case 'žepče':
@@ -101,6 +139,7 @@ bot.on('message', message => {
         case 'jebogabog':
         case 'karakter':
         case 'vululu':
+        case 'poyo':
 
             if (!checkVoiceChannel(message)) return;
 
