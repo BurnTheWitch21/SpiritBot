@@ -123,7 +123,12 @@ bot.on('message', message => {
             message.channel.send('Spavaš li mirno, Bulaja?!');
             
             break;
-
+        
+        case 'meme':
+            message.channel.send("", {files: ["files\\memes\\poyo_joy.jpg"]});
+            //fs.readdir("files");
+            break;
+        
         case 'kreme':
         case 'žepče':
         case 'spanish':
@@ -140,6 +145,8 @@ bot.on('message', message => {
         case 'karakter':
         case 'vululu':
         case 'poyo':
+        case '11':
+        case 'aligoator':
 
             if (!checkVoiceChannel(message)) return;
 
