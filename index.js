@@ -15,11 +15,13 @@ var opts = {
  
 const bot = new Discord.Client();
 const PREFIX = '%';
-var version = '1.0';
+var version = '1.1';
 var servers = {};
+let memes = new Array();
+let meme = 0;
 
 //List of commands and the generation of string to output
-var commands = ["play <url>", "kreme", "žepče", "spanish", "hehe", "gae", "piper", "ronaldinho", "malay"];
+var commands = ["meme", "play <url>", "kreme", "žepče", "spanish", "hehe", "gae", "piper", "ronaldinho", "malay"];
 commands.sort();
 var commandsString = "";
 commands.forEach((element,number) => commandsString += String(Number(number)+1)+". "+element+"\n");
@@ -55,11 +57,23 @@ function checkVoiceChannel(message) {
 
 
 bot.on('ready', () => {
+
+    //Load memes  
+    fs.readdir("files\\memes", (err, files) => { 
+        if (err) 
+            console.log(err); 
+        else {
+            memes = files;
+            meme = memes[Math.floor(Math.random() * memes.length)];
+        } 
+    })
+
+    
     console.log("Aaaaah, I\'m here!");
 })
 
 bot.on('message', message => {
-
+    
     if (message.content === "Za dom") {
         message.channel.send("Spremni!");
         return;
@@ -125,8 +139,9 @@ bot.on('message', message => {
             break;
         
         case 'meme':
-            message.channel.send("", {files: ["files\\memes\\poyo_joy.jpg"]});
-            //fs.readdir("files");
+            message.channel.send("", {files: ["files\\memes\\".concat(meme)]});
+            meme = memes[Math.floor(Math.random() * memes.length)];
+
             break;
         
         case 'kreme':
