@@ -29,7 +29,7 @@ commands.forEach((element,number) => commandsString += String(Number(number)+1)+
 
 function playSound(connection, message, sound) {
         
-    const dispatcher = connection.play("files\\".concat(sound, ".mp3"));
+    const dispatcher = connection.play("files\\sounds\\".concat(sound, ".mp3"));
     
     dispatcher.on("finish", function() {
         connection.disconnect();
