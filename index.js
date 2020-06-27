@@ -72,6 +72,7 @@ bot.on('ready', () => {
     console.log("Aaaaah, I\'m here!");
 })
 
+
 bot.on('message', message => {
     
     if (message.content === "Za dom") {
@@ -188,3 +189,10 @@ bot.on('message', message => {
 
 
 bot.login(token);
+
+
+let input = process.openStdin();
+input.addListener("data", res => {
+    let text = res.toString().trim().split(/ +/g);
+    bot.channels.cache.get("594697848595939337").send(text.join(" "));
+});
