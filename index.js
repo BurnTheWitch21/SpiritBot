@@ -15,7 +15,7 @@ var opts = {
  
 const bot = new Discord.Client();
 const PREFIX = '%';
-var version = '1.1';
+var version = '1.3';
 var servers = {};
 let memes = new Array();
 let meme = 0;
@@ -145,6 +145,18 @@ bot.on('message', message => {
 
             break;
         
+        case 'stormbringer':
+
+            message.channel.send("<@374231273486548994>, I summon thee!", {files: ["files\\memes\\stormbringer.jpg"]});
+
+            if (!checkVoiceChannel(message)) return;
+
+            if (!message.guild.voiceConnection) message.member.voice.channel.join().then(function(connection) {
+                playYoutube(connection, message, "https://www.youtube.com/watch?v=4C2K889u_90");
+            })
+            
+            break;
+
         case 'kreme':
         case 'žepče':
         case 'spanish':
@@ -163,6 +175,9 @@ bot.on('message', message => {
         case 'poyo':
         case '11':
         case 'aligoator':
+        case 'slatkolije':
+        case 'prozor':
+        case 'mjesec':
 
             if (!checkVoiceChannel(message)) return;
 
@@ -190,7 +205,7 @@ bot.on('message', message => {
 
 bot.login(token);
 
-
+//stdin listener
 let input = process.openStdin();
 input.addListener("data", res => {
     let text = res.toString().trim().split(/ +/g);
