@@ -15,13 +15,15 @@ var opts = {
  
 const bot = new Discord.Client();
 const PREFIX = '%';
-var version = '1.3';
+var version = '1.4';
 var servers = {};
+
 let memes = new Array();
 let meme = 0;
+let sounds = new Array();
 
 //List of commands and the generation of string to output
-var commands = ["meme", "play <url>", "kreme", "žepče", "spanish", "hehe", "gae", "piper", "ronaldinho", "malay"];
+var commands = ["meme", "sounds", "stormbringer", "guide", "play <url>", "about"];
 commands.sort();
 var commandsString = "";
 commands.forEach((element,number) => commandsString += String(Number(number)+1)+". "+element+"\n");
@@ -68,6 +70,14 @@ bot.on('ready', () => {
         } 
     })
 
+    //Load sounds
+    fs.readdir("files\\sounds", (err, files) => { 
+        if (err) 
+            console.log(err); 
+        else {
+            sounds = files;
+        } 
+    })
     
     console.log("Aaaaah, I\'m here!");
 })
@@ -85,6 +95,15 @@ bot.on('message', message => {
 
     
     switch(args[0]) {
+        case 'zvuci':
+        case 'sounds':
+            var soundsLength = sounds.length;
+            var output = "";
+            for (var i = 0; i < soundsLength; i++) {
+                output = output.concat("\n", (i+1).toString(), ". ", sounds[i]);
+            }
+            message.channel.send(output);
+            break;
         
         case 'play':
 
@@ -156,36 +175,9 @@ bot.on('message', message => {
             })
             
             break;
-
-        case 'kreme':
-        case 'žepče':
-        case 'spanish':
-        case 'gae':
-        case 'ronaldinho':
-        case 'piper':
-        case 'malay':
-        case 'hehe':
-        case 'hushashmidter':
-        case 'autilagi':
-        case 'wololo':
-        case 'hepek':
-        case 'jebogabog':
-        case 'karakter':
-        case 'vululu':
-        case 'poyo':
-        case '11':
-        case 'aligoator':
-        case 'slatkolije':
-        case 'prozor':
-        case 'mjesec':
-
-            if (!checkVoiceChannel(message)) return;
-
-            if (!message.guild.voiceConnection) message.member.voice.channel.join().then(function(connection) {
-                playSound(connection, message, args[0]);
-            })
-            
-            break;
+        
+        case 'guide':
+            message.channel.send("Oho jel se to partija sprema?", {files: ["files\\documents\\Shikaku21318s_Guide_for_Wololo_Kingdoms_-2.pdf"]});
         
         case 'about':
             message.channel.send("Version: ".concat(version, "\nAuthor: BurnTheWitch\nPojava: sucks\nGitHub: https://github.com/BurnTheWitch21/SpiritBot.git"));
@@ -198,8 +190,17 @@ bot.on('message', message => {
         case 'pomagaj':
             message.channel.send("Sve komande počinju sa '%', a na raspolaganju imaš:\n"+commandsString);
             break;
-    }
 
+        default:
+            if (sounds.includes("".concat(args[0], ".mp3"))) {
+                if (!checkVoiceChannel(message)) return;
+
+                if (!message.guild.voiceConnection) message.member.voice.channel.join().then(function(connection) {
+                    playSound(connection, message, args[0]);
+                })
+            }     
+    }
+    
 })
 
 
